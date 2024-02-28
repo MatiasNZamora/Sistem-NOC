@@ -1,5 +1,5 @@
 import { CronService } from "./cron/cron.service";
-import { CheckServices } from "./domain/use-cases/checks/check.services";
+import { CheckServices } from "../domain/use-cases/checks/check.services";
 
 
 

@@ -1,8 +1,8 @@
 import fs, { existsSync } from 'fs';
-import { logDatasorce } from "../../domain/datasorces/log.datasorce";
-import { logEntities, LogSeverityLevel } from "../../domain/entities/log.entitis";
+import { LogDatasource } from "../../domain/datasorces/log.datasorce";
+import { LogEntity, LogSeverityLevel } from "../../domain/entities/log.entitis";
 
-export class FileSistemDataSorce implements logDatasorce {
+export class FileSystemDataSorce implements LogDatasource {
     
     private readonly logPath = 'logs/';
     private readonly allLogsPath = 'logs/logs-all.log';
@@ -12,6 +12,7 @@ export class FileSistemDataSorce implements logDatasorce {
     constructor(){
         this.createLogFiles();
     }
+
 
     private createLogFiles = () => {
         //crear la carpeta principal 
@@ -32,8 +33,7 @@ export class FileSistemDataSorce implements logDatasorce {
     };
 
 
-
-    async saveLog(newLog: logEntities): Promise<void> {
+    async saveLog(newLog: LogEntity): Promise<void> {
 
         const logAsJson = `${JSON.stringify(newLog)} \n`;
         fs.appendFileSync(this.allLogsPath, logAsJson );
@@ -49,9 +49,34 @@ export class FileSistemDataSorce implements logDatasorce {
     };
 
 
-    getLog(severityLevel: LogSeverityLevel): Promise<logEntities[]> {
-        
+    private getLogsFromFile = (path:string):LogEntity[] => {
+        const content = fs.readFileSync(path, 'utf8');
+        const logs = content.split('\n').map((log) => LogEntity.FromJson(log));
+
+        return logs;
+        // con el split corto el objeto por el /n el salto de linea para luego mapearlo y retornarlo como un array de objetos
     };
+
+
+    async getLog(severityLevel: LogSeverityLevel): Promise<LogEntity[]> {
+        
+        switch ( severityLevel ) {
+            
+            case LogSeverityLevel.low:
+                return this.getLogsFromFile(this.allLogsPath);
+        
+            case LogSeverityLevel.medium:
+                return this.getLogsFromFile(this.mediumLogsPath);
+
+            case LogSeverityLevel.hide:
+                return this.getLogsFromFile(this.highLogsPath);
+            
+            default: 
+                throw new Error(`${ LogSeverityLevel } is not implemented`);
+        };
+
+    };
+
 };
 
 

@@ -68,7 +68,7 @@ export class FileSystemDataSorce implements LogDatasource {
             case LogSeverityLevel.medium:
                 return this.getLogsFromFile(this.mediumLogsPath);
 
-            case LogSeverityLevel.hide:
+            case LogSeverityLevel.high:
                 return this.getLogsFromFile(this.highLogsPath);
             
             default: 

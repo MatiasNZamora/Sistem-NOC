@@ -31,7 +31,9 @@ export class LogEntity {
     };
 
     // json = { "level": "hide", "message": "hola mundo", "createAt":"1231235434234123435" }
-    static FromJson = (json:string):LogEntity => {
+    static FromJson = ( json:string ):LogEntity => {
+        // valido que si recibo un string vacio le hace json sino pasa 
+        json = (json === '') ? '{}' : json;
         const { message, level, createAt, origin } = JSON.parse(json);
         
         const log = new LogEntity({
@@ -39,6 +41,20 @@ export class LogEntity {
             level: level,
             createAt: createAt,
             origin: origin,
+        });
+
+        return log;
+    };
+
+
+    static fromObject = ( object: { [key: string]:any } ) : LogEntity => {
+        const { message, level, createAt, origin } = object;
+        
+        const log = new LogEntity({
+            message, 
+            level, 
+            createAt, 
+            origin
         });
 
         return log;

@@ -13,3 +13,10 @@ MAILER_EMAIL=
 MAILER_SECRET_KEY=
 PROD=true
 ```
+3. Ejecutar el comando ```npm install```
+4. Levantar las bases de datos con el comando ``` docker compose up -d ```
+5. Ejecuatar ``` npm run dev ```
+
+
+## Obtener Gmail Key
+[Google AppsPasswords](https://myaccount.google.com/u/0/appasswords)

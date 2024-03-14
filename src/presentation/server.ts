@@ -36,23 +36,23 @@ export class Server {
         // new SendEmailLogs( emailService, fileSystemLogRepository)
         // .execute(['devmatiasnzamora@gmail.com','nikoozamora93@gmail.com' ]);
 
-        CronService.createJob(
-            '*/5 * * * * *', 
-            () => {
-                const url = 'https://google.com';
-                // const url = 'http://localhost:3000';
-                new CheckServicesMultiple(
-                    [
-                        fsLogRepository, 
-                        mongoLogRepository, 
-                        postgresLogRepository
-                    ],
-                    () => console.log(`${ url } is OK`),
-                    (error) => console.log(`${error}`)
+        // CronService.createJob(
+        //     '*/5 * * * * *', 
+        //     () => {
+        //         const url = 'https://google.com';
+        //         // const url = 'http://localhost:3000';
+        //         new CheckServicesMultiple(
+        //             [
+        //                 fsLogRepository, 
+        //                 mongoLogRepository, 
+        //                 postgresLogRepository
+        //             ],
+        //             () => console.log(`${ url } is OK`),
+        //             (error) => console.log(`${error}`)
                 
-                ).execute(url);
-            }
-        );
+        //         ).execute(url);
+        //     }
+        // );
 
     };
 
